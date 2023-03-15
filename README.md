@@ -147,9 +147,9 @@ This project was created using the following technologies.
 
 ## Author
 
-- Github: [@Muhammet-Yildiz](https://github.com/Muhammet-Yildiz)
-- Linkedin: [@muhammet-yildiz](https://www.linkedin.com/in/muhammet-yıldız-841908224/)
-- Email: [yildiz.m.muhammet@gmail.com](mailto:yildiz.m.muhammet@gmail.com)
+- Github: [@bert-hutapea](https://github.com/berthutapea)
+- Linkedin: [@gilbert-hutapea](https://www.linkedin.com/in/gilberthutapea/)
+- Email: [berthutapea@gmail.com](mailto:berthutapea@gmail.com)
 
 ## License
 

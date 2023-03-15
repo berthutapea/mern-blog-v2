@@ -1,0 +1,169 @@
+.Inclusive-editprofile-page {
+    position: relative;
+    width: 100vw;
+    height: 76vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Inclusive-editprofile-page form {
+    padding: 1.2rem;
+    height: 420px;
+    width: 450px;
+}
+
+.Inclusive-editprofile-page form .input-wrapper {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 6px;
+}
+
+.Inclusive-editprofile-page form .input-wrapper input {
+    outline: 0;
+    width: 100%;
+    padding: 18px;
+    border: #d1d1d1 solid 1px;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #252525;
+    padding-top: 22px;
+}
+
+.Inclusive-editprofile-page form .input-wrapper label {
+    position: absolute;
+    top: -5px;
+    left: 14px;
+    font-size: 0.8rem;
+    font-family: 'Inter', sans-serif;
+    background-color: white;
+    color: #646464;
+    padding: 0 8px;
+}
+
+.Inclusive-editprofile-page form input:focus-within {
+    border: #0205b1 solid 1px;
+}
+
+.Inclusive-editprofile-page form input:focus+label {
+    color: #0205b1 !important;
+}
+
+.profile-ımg-upld-wrapper {
+    height: 190px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-ımg-upld-wrapper .currentImage {
+    width: 48%;
+    border: rgb(235, 235, 235) solid 1px;
+    position: relative;
+    height: 100%;
+    padding: 0.8rem;
+}
+
+.profile-ımg-upld-wrapper .currentImage .absolute {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    color: white;
+    background-color: #0205b1;
+    font-size: 0.6rem;
+    font-weight: bold;
+    opacity: 0.6;
+    font-family: 'Mukta ', sans-serif;
+    z-index: 52;
+}
+
+.currentImage img {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.ProfilePhotoField {
+    border: rgb(235, 235, 235) solid 1px;
+    width: 48%;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+}
+
+.ProfilePhotoField svg {
+    font-size: 4.4rem;
+    color: rgba(0, 0, 0, 0.7);
+    margin-bottom: 0.6rem;
+    margin-top: 19px;
+}
+
+.ProfilePhotoField .txt {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.ProfilePhotoField .txt div {
+    display: flex;
+    align-items: center;
+}
+
+.ProfilePhotoField .txt svg {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    margin-top: 7px;
+}
+
+.ProfilePhotoField [type="file"] {
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.editprofile-btn {
+    width: 100%;
+    background-color: #0063a5;
+    padding: 0.7rem;
+    color: white;
+    margin-top: 1.9rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+}
+
+.Inclusive-editprofile-page form .error_msg {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    background-color: rgba(245, 72, 72, 0.9);
+    color: white;
+    padding: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.Inclusive-editprofile-page form .success_msg {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    background-color: rgba(14, 218, 75, 0.9);
+    color: white;
+    padding: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.Inclusive-editprofile-page form .success_msg a {
+    color: black;
+    font-weight: bold;
+    padding-left: 1rem;
+}

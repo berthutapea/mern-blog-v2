@@ -1,0 +1,44 @@
+.notAuthHome_Emp {
+    height: auto;
+}
+
+.Screen_s {
+    flex-direction: column;
+    width: 380px;
+    height: 270px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    background: #fff;
+    margin-top: 2rem;
+}
+
+.Screen_s h1 {
+    font-size: 1.7rem;
+    display: block;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.options {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.options a {
+    padding: 0.8rem 1.2rem;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.options a.registerBtn {
+    background-color: rgb(27, 156, 196);
+}
+
+.options a.loginBtn {
+    background-color: rgb(196, 196, 196);
+}

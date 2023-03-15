@@ -1,0 +1,21 @@
+.footer {
+    max-width: 1000px;
+    width: 100%;
+    border-bottom: rgba(0, 0, 0, 0.2) solid 1px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.copyright {
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding: 10px;
+}
+
+.copyright .copyright-blog {
+    font-size: 18px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    margin: 0px;
+}

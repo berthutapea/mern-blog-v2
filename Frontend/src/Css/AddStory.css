@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap');
+.Inclusive-addStory-page {
+    width: 1000px;
+    margin: 1.2rem auto;
+}
+
+@media only screen and (max-width: 1001px) {
+    .Inclusive-addStory-page {
+        width: 100%;
+    }
+}
+
+.Inclusive-addStory-page .addStory-form {
+    position: relative;
+    width: 650px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.addStory-form input#title {
+    width: 100%;
+    height: 55px;
+    outline: 0;
+    border: none;
+    border: rgb(235, 235, 235) solid 1px;
+    font-size: 1.4rem;
+    padding-left: 1rem;
+    font-weight: 450;
+    font-family: 'Balsamiq Sans', cursive;
+    border-bottom: none;
+}
+
+.ck-editor {
+    margin-bottom: 1rem !important;
+}
+
+@media only screen and (max-width: 651px) {
+    .Inclusive-addStory-page .addStory-form {
+        width: 80vw;
+    }
+    .ck.ck-reset.ck-editor.ck-rounded-corners {
+        width: 100% !important;
+    }
+}
+
+.ck-editor__top * {
+    border: none !important;
+}
+
+.ck-editor__top {
+    border: rgb(235, 235, 235) solid 1px !important;
+    border-bottom: none !important;
+    padding: 0.6rem 1rem !important;
+}
+
+.ck-content {
+    border: rgb(235, 235, 235) solid 1px !important;
+}
+
+.ck-toolbar__items,
+.ck-toolbar div {
+    border: none !important;
+}
+
+.ck-editor__editable {
+    height: 250px;
+    padding: 0.5rem 1rem !important;
+}
+
+.ck-editor__editable:focus {
+    box-shadow: none !important;
+}
+
+.StoryImageField {
+    border: rgb(235, 235, 235) solid 1px;
+    width: 100%;
+    height: 240px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.StoryImageField svg {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.StoryImageField .txt {
+    width: 350px;
+    height: auto;
+    margin-top: 14px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.StoryImageField [type="file"] {
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.addStory-btn {
+    width: 100%;
+    background-color: #0063a5;
+    padding: 0.7rem;
+    color: white;
+    margin-top: 1.9rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+}
+
+.dis-btn {
+    width: 100%;
+    background-color: #0063a5;
+    padding: 0.7rem;
+    color: white;
+    margin-top: 1.9rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    opacity: 0.4;
+}
+
+.addStory-form .error_msg {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    background-color: rgba(245, 72, 72, 0.9);
+    color: white;
+    padding: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.addStory-form .success_msg {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    background-color: rgba(14, 218, 75, 0.9);
+    color: white;
+    padding: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.addStory-form .success_msg a {
+    color: black;
+    font-weight: bold;
+    padding-left: 1rem;
+}

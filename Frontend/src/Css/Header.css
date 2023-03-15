@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto+Slab:wght@800&display=swap&family=Roboto+Slab:wght@800&family=Saira+Condensed:wght@500&family=Staatliches&display=swap');
+
+header {
+    width: 100%;
+    height: 95px;
+    position: relative;
+}
+
+header .averager {
+    max-width: 1000px;
+    width: 100%;
+    height: 92px;
+    border-bottom: rgba(0, 0, 0, 0.2) solid 1px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    text-decoration: none;
+    color: black;
+    font-family: 'Staatliches', cursive;
+    color: #0063a5;
+}
+
+header .logo h5 {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 0.7px;
+    margin-top: 3px;
+}
+
+.header_options {
+    width: auto;
+    position: relative;
+}
+
+.header_options div.noAuth_options a,
+.header_options div.auth_options a.addStory-link {
+    text-decoration: none;
+    padding: 2px 1.4rem;
+    font-weight: bold;
+    font-family: 'Saira Condensed', sans-serif;
+    font-size: 1.2rem;
+    color: rgb(77, 77, 77);
+}
+
+.addStory-link {
+    color: #0063a5 !important;
+    border: #0063a5 solid 2px;
+    padding: 4px 10px !important;
+    margin-right: 2rem;
+    border-radius: 4px;
+    margin-top: 7px;
+}
+
+.register-link {
+    border: #0063a5 solid 2px;
+    border-radius: 4px;
+    color: #0063a5 !important;
+}
+
+.search-form {
+    width: 450px;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 1030px) {
+    header .averager {
+        padding: 0 1rem;
+    }
+
+    .search-form {
+        display: none;
+    }
+}
+
+.search-form input {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 6px;
+    outline: none;
+    border: none;
+    padding-left: 0.9rem;
+    background-color: rgba(105, 113, 116, 0.1);
+}
+
+.search-form button {
+    position: absolute;
+    border: none;
+    top: 25px;
+    right: 28px;
+}
+
+.search-form button.disBtn {
+    color: rgb(167, 164, 164);
+}
+
+.search-form button.searchBtn {
+    color: #0063a5 !important;
+}
+
+.search-form button i {
+    font-size: 1.4rem;
+}
+
+.header_options div.auth_options {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: auto;
+    height: 70px;
+}
+
+.header-profile-wrapper {
+    height: 50px;
+    position: relative;
+}
+
+.header-profile-wrapper img {
+    border-radius: 50%;
+    width: 52px;
+    cursor: pointer;
+    height: 52px;
+    margin-top: 3px;
+}
+
+.header-profile-wrapper:hover .sub-profile-wrap {
+    display: flex !important;
+}
+
+.sub-profile-wrap {
+    position: absolute;
+    top: 55px;
+    background-color: white;
+    width: 130px;
+    height: 130px;
+    padding: 1.5rem 0.2rem;
+    right: -42px;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 6px;
+    border: rgba(218, 217, 217, 0.6) solid 1px;
+    box-shadow: 0 0 2px 4px rgb(206 206 206 / 20%);
+    display: none;
+    z-index: 52;
+}
+
+.sub-profile-wrap a.profile-link {
+    margin-bottom: 1.2rem;
+    text-decoration: none;
+    font-family: 'Saira Condensed', sans-serif;
+    font-size: 1.2rem;
+    color: #0063a5;
+    font-weight: 500;
+}
+
+.profile-link svg {
+    font-size: 1.1rem;
+    margin-right: 4px;
+    margin-top: -5px;
+}
+
+.sub-profile-wrap button.logout-btn {
+    border: none;
+    background-color: white;
+    font-family: 'Saira Condensed', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgb(161, 2, 2);
+}
+
+.sub-profile-wrap button.logout-btn svg {
+    margin-right: 4px;
+    margin-top: -5px;
+}
+
+.readList-link {
+    color: black;
+    font-size: 2rem;
+    margin-right: 1.8rem;
+    color: #024d80;
+    position: relative;
+}
+
+.readList-link:hover {
+    color: #024d80;
+}
+
+#readListLength {
+    position: absolute;
+    background-color: #0063a5;
+    box-shadow: 0 0 4px 1px #0063a5;
+    text-decoration: none;
+    top: 3px;
+    right: -12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: 'Inter';
+    line-height: 24px;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+}

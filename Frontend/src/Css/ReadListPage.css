@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=IBM+Plex+Serif:wght@300&family=Shippori+Antique+B1&family=Signika+Negative:wght@300&display=swap');
+.Inclusive-readList-page {
+    width: 700px;
+    margin: 2.6rem auto;
+}
+
+.Inclusive-readList-page h2 {
+    font-family: 'Secular One', sans-serif;
+    font-size: 2.1rem;
+    margin-bottom: 1.6rem;
+    font-weight: bold;
+}
+
+.readList-top-block {
+    padding: 0 3px;
+    display: flex;
+    margin-bottom: 2.6rem;
+    position: relative;
+}
+
+.readList-top-block img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+
+.readList-top-block .BsThreeDots-icon {
+    position: absolute;
+    right: 0;
+    top: 3px;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: rgb(61, 61, 61);
+}
+
+.readList-top-block .activeUser-info-wrapper {
+    font-family: 'Shippori Antique B1', sans-serif;
+}
+
+.readList-top-block .activeUser-info-wrapper b {
+    color: #0063a5;
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.activeUser-info-wrapper div span {
+    margin-right: 7px;
+    font-size: 0.8rem;
+    color: rgb(94, 94, 94);
+    font-weight: bold;
+}
+
+.activeUser-info-wrapper div i svg {
+    font-size: 0.8rem;
+    color: rgb(70, 70, 70);
+    margin-left: 6px;
+    margin-top: -1px;
+}
+
+.readList-story-wrapper {
+    width: 100%;
+    height: auto;
+}
+
+.readList-story-wrapper .readList-story-item {
+    border-bottom: rgba(214, 214, 214, 0.4) solid 1px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.7rem;
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.readList-story-item section:first-child {
+    width: 70%;
+}
+
+.readList-story-item .story-top-block {
+    display: flex;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    width: 350px;
+    font-family: 'Signika Negative', sans-serif;
+}
+
+.readList-story-item .story-top-block span {
+    margin: 0 6px;
+}
+
+.readList-story-item .story-top-block i svg {
+    margin-left: 9px;
+    font-size: 0.7rem;
+    margin-top: -2px;
+    color: rgb(63, 63, 63);
+}
+
+.story-med-block {
+    position: relative;
+    width: 100%;
+}
+
+.readList-story-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+}
+
+.readList-story-title a {
+    color: rgb(49, 49, 49);
+    font-weight: 500;
+    font-family: 'Acme', sans-serif;
+    text-decoration: none;
+}
+
+.readList-story-content {
+    max-height: 44px;
+    overflow: hidden;
+}
+
+.readList-story-content * {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: black;
+}
+
+@media only screen and (max-width: 730px) {
+    .Inclusive-readList-page {
+        width: 100%;
+        padding: 0 22px;
+    }
+    .readList-story-title {
+        font-size: 1.2rem;
+        padding-right: 7px;
+    }
+    .readList-story-content * {
+        font-size: 0.8rem;
+        padding-right: 10px;
+    }
+}
+
+.story-bottom-block {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 13px;
+    align-items: center;
+}
+
+.story-bottom-block a {
+    color: #0063a5;
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.story-bottom-block a span {
+    margin-right: 3px;
+}
+
+.story-bottom-block div i {
+    margin-right: 0.8rem;
+    cursor: pointer;
+}
+
+.readList-story-item section:last-child .story-Image-Wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+}
+
+@media only screen and (max-width: 730px) {
+    .Inclusive-readList-page {
+        width: 100%;
+        padding: 0 22px;
+    }
+    .readList-story-title {
+        font-size: 1.2rem;
+        padding-right: 7px;
+    }
+    .readList-story-content * {
+        font-size: 0.8rem;
+        padding-right: 10px;
+    }
+    .readList-story-item section:last-child .story-Image-Wrap {
+        align-items: center;
+    }
+}
+
+.story-Image-Wrap img {
+    width: 115px;
+    height: 115px;
+}
+
+.empty-readList {
+    height: 350px;
+    display: flex;
+    font-size: 1.1rem;
+    font-family: 'Inter';
+    color: rgb(112, 112, 112);
+    justify-content: center;
+    align-items: center;
+}

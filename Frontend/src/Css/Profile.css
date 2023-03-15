@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300&display=swap');
+.Inclusive_profile_page {
+    position: relative;
+    width: 1000px;
+    margin: 2.8rem auto;
+}
+
+.profile-top-wrap {
+    border: 1px solid rgb(235, 235, 235);
+    padding: 22px 25px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.profile-top-wrap span {
+    color: #0063a5;
+    font-family: 'Mukta', sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.profile-top-wrap a {
+    text-decoration: underline;
+    color: rgb(70, 70, 70);
+    font-size: 0.8rem;
+    padding-top: 1px;
+}
+
+.Inclusive_profile_page ul {
+    border: 1px solid rgb(235, 235, 235);
+    border-radius: 6px;
+    list-style-type: none;
+    padding: 22px 25px;
+}
+
+.Inclusive_profile_page ul li {
+    border-bottom: 1px solid rgb(248, 246, 246);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 5px;
+}
+
+.Inclusive_profile_page ul li span {
+    color: #333;
+    font-family: 'Mukta', sans-serif;
+    font-weight: bold;
+}
+
+.Inclusive_profile_page ul li div {
+    width: 222px;
+    color: rgb(128, 128, 128);
+}
+
+@media only screen and (max-width: 1030px) {
+    .Inclusive_profile_page {
+        width: 94%;
+    }
+    .Inclusive_profile_page ul li div {
+        font-size: 0.9rem;
+        width: 175px;
+    }
+}
+
+.btns_wrap {
+    display: flex;
+    padding: 25px 0;
+    justify-content: flex-start;
+}
+
+.btns_wrap button {
+    all: unset;
+}
+
+.btns_wrap .profileEditBtn a {
+    width: 155px;
+    border: 1px solid #0063a5;
+    color: #0063a5;
+    border-radius: 3px;
+    background-color: white;
+    height: 45px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Mukta', sans-serif;
+    margin-left: 2rem;
+    font-size: 0.9rem;
+    transition: 350ms ease;
+}
+
+.profileEditBtn a:hover {
+    background-color: #f8f8f8;
+}
+
+.changePassBtn a {
+    margin-left: 2rem;
+    width: 155px;
+    border: 1px solid #0063a5;
+    background-color: #0063a5;
+    border-radius: 3px;
+    color: white;
+    height: 45px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Mukta';
+    transition: 450ms ease;
+    font-size: 0.9rem;
+}
+
+.changePassBtn a:hover {
+    color: white;
+    text-decoration: none;
+    background-color: #0063a5;
+}

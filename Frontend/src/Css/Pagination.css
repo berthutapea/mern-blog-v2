@@ -1,0 +1,32 @@
+.pagination {
+    padding-left: 1rem;
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0 2rem;
+}
+
+.pagination button {
+    margin-right: 0.5rem;
+    cursor: pointer;
+    padding: 10px 17px;
+    border: none;
+    border-radius: 6px;
+    border: #EDF0F7 solid 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(145, 145, 145);
+    background-color: #EDF0F7;
+}
+
+.pagination button svg {
+    color: #0063a5;
+    font-size: 1.1rem;
+}
+
+.pagination button:disabled {
+    color: #0063a5;
+    font-weight: bold;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}

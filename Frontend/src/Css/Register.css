@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap&family=Inter&family=Signika+Negative:wght@500&display=swap');
+.Inclusive-register-page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EDF0F7;
+}
+
+.register-big-wrapper {
+    width: 90%;
+    max-width: 1100px;
+    height: 95%;
+    border-radius: 9px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.section-wrapper {
+    width: 50%;
+    padding: 1.6rem 4rem;
+}
+
+.register-banner-section {
+    background-color: #0507D4;
+    border-radius: 9px 0 0 9px;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 1100px) {
+    .register-banner-section img {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 860px) {
+    .register-banner-section {
+        display: none;
+    }
+    .section-wrapper {
+        max-width: 580px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 1.7rem 10vw;
+    }
+    .register-big-wrapper {
+        width: 80%;
+        padding: 0;
+    }
+}
+
+.top-suggest_login {
+    font-size: 0.8rem;
+}
+
+.top-suggest_login span {
+    color: #ABB8c5;
+    margin-right: 8px;
+}
+
+.top-suggest_login a {
+    font-size: 0.7rem;
+    color: rgb(13, 16, 163);
+    text-decoration: none;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+}
+
+.top-register-explain {
+    margin-top: 3vh;
+}
+
+.top-register-explain h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    margin-bottom: 1.2rem;
+    font-size: 2.4rem;
+    font-family: 'Signika Negative', sans-serif;
+}
+
+.top-register-explain p {
+    color: #afafaf;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+}
+
+.register-big-wrapper form {
+    position: relative;
+    padding-top: 1rem;
+}
+
+.register-big-wrapper form label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-size: 0.8rem;
+    font-family: 'Inter', sans-serif;
+    background-color: white;
+    color: #646464;
+    padding: 0 6px;
+}
+
+.register-big-wrapper form .input-wrapper {
+    position: relative;
+}
+
+.register-big-wrapper form input {
+    outline: 0;
+    width: 100%;
+    margin-bottom: 1.8rem;
+    padding: 15px;
+    padding-top: 22px;
+    border: #dadcdd solid 1px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    color: #646464;
+}
+
+.register-big-wrapper form input:focus-within {
+    border: #0205b1 solid 1px;
+}
+
+.register-big-wrapper form input:focus+label {
+    color: #0205b1 !important;
+}
+
+.register-screen__forgotpassword {
+    float: right;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    margin-top: -13px;
+    color: rgb(13, 16, 163);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 3px 6px;
+}
+
+.register-big-wrapper form button {
+    cursor: pointer;
+    border: none;
+    outline: 0;
+    background-color: #0205b1;
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 14px;
+    letter-spacing: 0.4px;
+}
+
+.error_message {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    margin-top: -1.2rem;
+    background-color: rgba(245, 72, 72, 0.9);
+    color: white;
+    padding: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+}

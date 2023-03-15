@@ -121,7 +121,7 @@ This project was created using the following technologies.
  ##  Screenshots 
  
 
-
+<!-- 
 ![picture1](https://user-images.githubusercontent.com/72153125/157872654-6a7b1a45-bf7d-4bdb-b69a-fcb10591e052.png)
 ---- -
 
@@ -142,7 +142,7 @@ This project was created using the following technologies.
 --- - 
 ![picture6](https://user-images.githubusercontent.com/72153125/157872733-e558f6fe-3478-434e-8546-b84568bcfc44.png)
 --- - 
-![forgotPassword](https://user-images.githubusercontent.com/72153125/157872587-c3c3a7a0-dafe-4257-bbd4-19ac9f53b1ea.png)
+![forgotPassword](https://user-images.githubusercontent.com/72153125/157872587-c3c3a7a0-dafe-4257-bbd4-19ac9f53b1ea.png) -->
 
 
 ## Author

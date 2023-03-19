@@ -1,7 +1,7 @@
 {
     "name": "frontend",
     "version": "0.1.0",
-    "proxy": "https://api.blog.msnproduction.com/",
+    "proxy": "http://localhost:5000/",
     "private": true,
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^32.0.0",

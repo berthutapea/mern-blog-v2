@@ -58,8 +58,16 @@ const App = () => {
               <Route exact path="/story/:slug/like" element={<DetailStory />} />
             </Route>
 
-            <Route exact path="/story/:slug/edit" element={<PrivateRoute />}>
-              <Route exact path="/story/:slug/edit" element={<EditStory />} />
+            <Route
+              exact
+              path="/story/:storyId/edit/"
+              element={<PrivateRoute />}
+            >
+              <Route
+                exact
+                path="/story/:storyId/edit/"
+                element={<EditStory />}
+              />
             </Route>
 
             <Route exact path="/story/:slug/delete" element={<PrivateRoute />}>

@@ -38,12 +38,16 @@ router.get(
   editStoryPage
 );
 
-router.put(
+router.post(
+  //"/story/editStory/:storyId/edit",
   "/story/editStory/:storyId/edit",
   [
+    () => {
+      console.log("request for", storyId);
+    },
     getAccessToRoute,
     checkStoryExist,
-    checkUserAndStoryExist,
+    //checkUserAndStoryExist,
     fileUpload(),
     // imageupload.single("image"),
   ],

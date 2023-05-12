@@ -31,6 +31,7 @@ const EditStory = () => {
       setLoading(true);
       try {
         const { data } = await axios.get(`/story/editStory/${storyId}`, config);
+
         setStory(data.data);
         setTitle(data.data.title);
         setContent(data.data.content);
@@ -56,7 +57,7 @@ const EditStory = () => {
     formdata.append("userId", activeUser._id);
 
     try {
-      const { data } = await axios.put(
+      const { data } = await axios.post(
         `/story/${storyId}/edit`,
         formdata,
         config

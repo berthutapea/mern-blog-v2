@@ -1,35 +1,36 @@
-const CustomError = require("../../Helpers/error/CustomError");
-const User = require("../../Models/user")
-const jwt = require("jsonwebtoken");
-const asyncErrorWrapper =require("express-async-handler")
-const { isTokenIncluded ,getAccessTokenFromHeader} = require("../../Helpers/auth/tokenHelpers");
+import CustomError from "../../Helpers/error/CustomError.js";
+import User from "../../Models/user.js";
+import jwt from "jsonwebtoken";
+import asyncErrorWrapper from "express-async-handler";
+import {
+  isTokenIncluded,
+  getAccessTokenFromHeader,
+} from "../../Helpers/auth/tokenHelpers.js";
 
+export const getAccessToRoute = asyncErrorWrapper(async (req, res, next) => {
+  const { JWT_SECRET_KEY } = process.env;
 
-const getAccessToRoute = asyncErrorWrapper(async(req,res,next) =>{
+  if (!isTokenIncluded(req)) {
+    return next(
+      new CustomError("You are not authorized to access this route ", 401)
+    );
+  }
 
-    const {JWT_SECRET_KEY} =process.env ;
+  const accessToken = getAccessTokenFromHeader(req);
 
-    if(!isTokenIncluded(req)) {
+  const decoded = jwt.verify(accessToken, JWT_SECRET_KEY);
 
-        return next(new CustomError("You are not authorized to access this route ", 401))
-    }
+  const user = await User.findById(decoded.id);
 
-    const accessToken = getAccessTokenFromHeader(req)
+  if (!user) {
+    return next(
+      new CustomError("You are not authorized to access this route ", 401)
+    );
+  }
 
-    const decoded = jwt.verify(accessToken,JWT_SECRET_KEY) ;
+  req.user = user;
 
-    const user = await User.findById(decoded.id)
-   
-    if(!user) {
-        return next(new CustomError("You are not authorized to access this route ", 401))
-    }
+  next();
+});
 
-    req.user = user ; 
-
-    next()
-
-})
-
-
-
-module.exports ={getAccessToRoute}
+export default { getAccessToRoute };

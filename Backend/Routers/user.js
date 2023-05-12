@@ -1,23 +1,30 @@
-const express = require("express")
+import express from "express";
 
-const imageUpload = require("../Helpers/Libraries/imageUpload");
+import imageUpload from "../Helpers/Libraries/imageUpload.js";
 
-const {profile,editProfile,changePassword,addStoryToReadList,readListPage} = require("../Controllers/user");
-const { getAccessToRoute } = require("../Middlewares/Authorization/auth");
+import {
+  profile,
+  editProfile,
+  changePassword,
+  addStoryToReadList,
+  readListPage,
+} from "../Controllers/user.js";
+import { getAccessToRoute } from "../Middlewares/Authorization/auth.js";
 
+const router = express.Router();
 
-const router = express.Router() ;
+router.get("/profile", getAccessToRoute, profile);
 
-router.get("/profile",getAccessToRoute ,profile)
+router.post(
+  "/editProfile",
+  [getAccessToRoute, imageUpload.single("photo")],
+  editProfile
+);
 
-router.post("/editProfile",[getAccessToRoute ,imageUpload.single("photo")],editProfile)
+router.put("/changePassword", getAccessToRoute, changePassword);
 
-router.put("/changePassword",getAccessToRoute,changePassword)
+router.post("/:slug/addStoryToReadList", getAccessToRoute, addStoryToReadList);
 
-router.post("/:slug/addStoryToReadList",getAccessToRoute ,addStoryToReadList)
+router.get("/readList", getAccessToRoute, readListPage);
 
-router.get("/readList",getAccessToRoute ,readListPage)
-
-
-
-module.exports = router
+export default router;

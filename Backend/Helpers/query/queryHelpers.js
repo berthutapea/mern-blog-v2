@@ -1,46 +1,41 @@
-const searchHelper = (searchKey, query, req) => {
+export const searchHelper = (searchKey, query, req) => {
+  if (req.query.search) {
+    const searchObject = {};
 
-    if (req.query.search) {
+    const regex = new RegExp(req.query.search, "i");
 
-        const searchObject = {};
+    searchObject[searchKey] = regex;
 
-        const regex = new RegExp(req.query.search, "i")
-
-        searchObject[searchKey] = regex
-
-        query = query.where(searchObject);
-      
-        return query
-    }
+    query = query.where(searchObject);
 
     return query;
-}
+  }
 
+  return query;
+};
 
-const paginateHelper = async (model ,query ,req)=> {
+export const paginateHelper = async (model, query, req) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.limit) || 6;
+  const skip = (page - 1) * pageSize;
 
-    const page = parseInt( req.query.page ) || 1 ; 
-    const pageSize = parseInt( req.query.limit ) || 6 ; 
-    const skip  = (page-1 ) * pageSize ; 
-   
-    const regex = new RegExp(req.query.search, "i")    
+  const regex = new RegExp(req.query.search, "i");
 
-    const total = await model.countDocuments({"title" : regex})
-  
-    const pages = Math.ceil(total / pageSize )  ;
+  const total = await model.countDocuments({ title: regex });
 
-    query = query.skip(skip).limit(pageSize) ; 
+  const pages = Math.ceil(total / pageSize);
 
-    return {
-        query : query  ,
-        page : page ,
-        pages : pages  
-    }
+  query = query.skip(skip).limit(pageSize);
 
-}
+  return {
+    query: query,
+    page: page,
+    pages: pages,
+  };
+};
 
-
-module.exports ={
-    searchHelper,
-    paginateHelper
-}
+export const queryHelper = {
+  searchHelper,
+  paginateHelper,
+};
+export default queryHelper;

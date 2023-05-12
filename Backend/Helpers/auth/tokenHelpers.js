@@ -1,33 +1,30 @@
-const isTokenIncluded =(req) => {
-   
-    return (
-        req.headers.authorization && req.headers.authorization.startsWith("Bearer")
-    )
+export const isTokenIncluded = (req) => {
+  return (
+    req.headers.authorization && req.headers.authorization.startsWith("Bearer")
+  );
+};
 
-}
+export const getAccessTokenFromHeader = (req) => {
+  const authorization = req.headers.authorization;
 
-const getAccessTokenFromHeader = (req) => {
+  const access_token = authorization.split(" ")[1];
 
-    const authorization = req.headers.authorization
+  return access_token;
+};
 
-    const access_token = authorization.split(" ")[1]
+export const sendToken = (user, statusCode, res) => {
+  const token = user.generateJwtFromUser();
 
-    return access_token
-}
+  return res.status(statusCode).json({
+    success: true,
+    token,
+  });
+};
 
-const sendToken = (user,statusCode ,res)=>{
+const tokenHelper = {
+  sendToken,
+  isTokenIncluded,
+  getAccessTokenFromHeader,
+};
 
-    const token = user.generateJwtFromUser()
-
-    return res.status(statusCode).json({
-        success: true ,
-        token
-    })
-
-}
-
-module.exports ={
-    sendToken,
-    isTokenIncluded,
-    getAccessTokenFromHeader
-}
+export default tokenHelper;

@@ -1,98 +1,99 @@
-const crypto = require("crypto")
+import crypto from "crypto";
 
-const mongoose = require("mongoose")
+import mongoose from "mongoose";
 
-const bcrypt = require("bcryptjs")
+import bcrypt from "bcryptjs";
 
-const jwt = require("jsonwebtoken")
+import jwt from "jsonwebtoken";
 
-const UserSchema = new mongoose.Schema({
-
-    username : {
-        type :String,
-        required : [true ,"Please provide a username"]
+const UserSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: [true, "Please provide a username"],
     },
-    photo : {
-        type : String,
-        default : "user.png"
+    photo: {
+      type: String,
+      default: "user.png",
     },
-    email : {
-        type: String ,
-        required : [true ,"Please provide a email"],
-        unique : true ,
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+    email: {
+      type: String,
+      required: [true, "Please provide a email"],
+      unique: true,
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "Please fill a valid email address",
+      ],
     },
-    password : {
-        type:String,
-        minlength: [6, "Please provide a password with min length : 6 "],
-        required: [true, "Please provide a password"],
-        select: false
+    password: {
+      type: String,
+      minlength: [6, "Please provide a password with min length : 6 "],
+      required: [true, "Please provide a password"],
+      select: false,
     },
     role: {
-        type: String,
-        default: "user",
-        enum: ["user", "admin"]
+      type: String,
+      default: "user",
+      enum: ["user", "admin"],
     },
-    readList : [{
-        type : mongoose.Schema.ObjectId, 
-        ref : "Story"
-    }],
+    readList: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Story",
+      },
+    ],
     readListLength: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
-    resetPasswordToken : String ,
-    resetPasswordExpire: Date 
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+  },
+  { timestamps: true }
+);
 
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
 
-},{timestamps: true})
+  const salt = await bcrypt.genSalt(10);
 
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
-UserSchema.pre("save" , async function (next) {
+UserSchema.methods.generateJwtFromUser = function () {
+  const { JWT_SECRET_KEY, JWT_EXPIRE } = process.env;
 
-    if (!this.isModified("password")) {
-        next()
-    }
+  const payload = {
+    id: this._id,
+    username: this.username,
+    email: this.email,
+  };
+  console.log(payload);
+  const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: JWT_EXPIRE });
 
-    const salt = await bcrypt.genSalt(10)
+  return token;
+};
 
-    this.password = await bcrypt.hash(this.password,salt)
-    next() ;
+UserSchema.methods.getResetPasswordTokenFromUser = function () {
+  const { RESET_PASSWORD_EXPIRE } = process.env;
 
-})
+  const randomHexString = crypto.randomBytes(20).toString("hex");
 
+  const resetPasswordToken = crypto
+    .createHash("SHA256")
+    .update(randomHexString)
+    .digest("hex");
 
-UserSchema.methods.generateJwtFromUser  = function(){
-    
-    const { JWT_SECRET_KEY,JWT_EXPIRE } = process.env;
+  this.resetPasswordToken = resetPasswordToken;
 
-    payload = {
-        id: this._id,
-        username : this.username,
-        email : this.email
-    }
+  this.resetPasswordExpire = Date.now() + parseInt(RESET_PASSWORD_EXPIRE);
 
-    const token = jwt.sign(payload ,JWT_SECRET_KEY, {expiresIn :JWT_EXPIRE} )
+  return resetPasswordToken;
+};
 
-    return token 
-}
+const User = mongoose.model("User", UserSchema);
 
-UserSchema.methods.getResetPasswordTokenFromUser =function(){
-
-    const { RESET_PASSWORD_EXPIRE } = process.env
-
-    const randomHexString = crypto.randomBytes(20).toString("hex")
-
-    const resetPasswordToken = crypto.createHash("SHA256").update(randomHexString).digest("hex")
-
-    this.resetPasswordToken = resetPasswordToken
-    
-    this.resetPasswordExpire =Date.now()+ parseInt(RESET_PASSWORD_EXPIRE)
-
-    return resetPasswordToken
-}
-
-
-const User = mongoose.model("User",UserSchema)
-
-module.exports = User  ;
+export default User;

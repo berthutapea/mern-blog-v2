@@ -1,20 +1,16 @@
-const bycrpt = require("bcryptjs")
+import bycrpt from "bcryptjs";
 
-const validateUserInput =(email,password) =>{
+export const validateUserInput = (email, password) => {
+  return email && password;
+};
 
-    return(
-        email && password
-    )
+export const comparePassword = (password, hashedPassword) => {
+  return bycrpt.compareSync(password, hashedPassword);
+};
 
-}
+const inputHelper = {
+  validateUserInput,
+  comparePassword,
+};
 
-const comparePassword =  (password , hashedPassword) =>{
-
-    return  bycrpt.compareSync(password,hashedPassword)
-
-}
-
-module.exports ={
-    validateUserInput,
-    comparePassword
-}
+export default inputHelper;

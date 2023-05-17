@@ -209,66 +209,149 @@ const DetailStory = (props) => {
       console.error("Invalid filename format");
     }
   };
-  // const handleConvert = () => {
-  //   // create a new jsPDF instance and set the page size to A4 portrait
-  //   const doc = new jsPDF("p", "mm", "a4");
 
-  //   // add the image to the document and set the position to the center of the page
-  //   const defaultWidth = 210;
-  //   const defaultHeight = 297;
+  // const handleConvert = async () => {
+  //   for (let i = 0; i < storyImages.length; i++) {
+  //     const image = storyImages[i];
+  //     const doc = new jsPDF("p", "mm", "a4");
 
-  //   image.getElementById((img, index) => {
-  //     // get the width and height of the image
-  //     const imgWidth = doc.getImageProperties(img).width;
-  //     const imgHeight = doc.getImageProperties(img).height;
-  //     // cal ratio to scale the image
+  //     const img = new Image();
+
+  //     await new Promise((resolve, reject) => {
+  //       img.onload = resolve;
+  //       img.onerror = reject;
+  //       img.src = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
+  //     });
+
+  //     const defaultWidth = 210;
+  //     const defaultHeight = 297;
+  //     const imgWidth = img.width;
+  //     const imgHeight = img.height;
   //     const ratio = imgWidth / imgHeight;
   //     const width = defaultWidth;
   //     const height = width / ratio;
-  //     // add the image to the document
+
   //     doc.addImage(img, "JPEG", 0, 0, width, height);
-  //     // when the image is not the last one, add a new page
-  //     if (index < image.length - 1) doc.addPage();
-  //   });
-  //   // dataUrl is the base64 encoded string of the pdf
-  //   const pdf = doc.output("dataurlstring");
-  //   // set the download state to the dataUrl
-  //   setDownload(pdf);
-  //   // set the view state to the bloburl
-  //   setView(doc.output("bloburl"));
-  //   // set the isComplete state to true
-  //   setIsComplete(true);
+
+  //     // generate a unique timestamp-based filename
+  //     const timestamp = Date.now();
+  //     const filename = `image_${timestamp}_to_PDF.pdf`;
+
+  //     // save each PDF file with a unique filename
+  //     doc.save(filename);
+  //   }
+  // };
+
+  // const handleConvert = async () => {
+  //   for (let i = 0; i < storyImages.length; i++) {
+  //     const image = storyImages[i];
+  //     const doc = new jsPDF("p", "mm", "a4");
+
+  //     const canvas = document.createElement("canvas");
+  //     const ctx = canvas.getContext("2d");
+
+  //     const img = new Image();
+
+  //     await new Promise((resolve, reject) => {
+  //       img.onload = resolve;
+  //       img.onerror = reject;
+  //       img.src = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
+  //     });
+
+  //     canvas.width = img.width;
+  //     canvas.height = img.height;
+  //     ctx.drawImage(img, 0, 0);
+
+  //     const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+  //     const pdfWidth = doc.internal.pageSize.getWidth();
+  //     const pdfHeight = (img.height * pdfWidth) / img.width;
+
+  //     doc.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+
+  //     // generate a unique timestamp-based filename
+  //     const timestamp = Date.now();
+  //     const filename = `image_${timestamp}_to_PDF.pdf`;
+
+  //     // save each PDF file with a unique filename
+  //     doc.save(filename);
+  //   }
   // };
   const handleConvert = async () => {
-    // create a new jsPDF instance and set the page size to A4 portrait
-    const doc = new jsPDF("p", "mm", "a4");
+    const doc = new jsPDF(); // Create a single doc object for all images
 
     for (let i = 0; i < storyImages.length; i++) {
       const image = storyImages[i];
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
       const img = new Image();
+
+      const imageUrl = `/story/images/${story.author._id}/${storyId}/${
+        image.fileName
+      }?t=${Date.now()}`;
 
       await new Promise((resolve, reject) => {
         img.onload = resolve;
         img.onerror = reject;
-        img.src = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
+        img.src = imageUrl;
       });
 
-      // add the image to the document and set the position to the center of the page
-      const defaultWidth = 210;
-      const defaultHeight = 297;
-      const imgWidth = img.width;
-      const imgHeight = img.height;
-      const ratio = imgWidth / imgHeight;
-      const width = defaultWidth;
-      const height = width / ratio;
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing the image
+      ctx.drawImage(img, 0, 0);
 
-      doc.addPage();
-      doc.addImage(img, "JPEG", 0, 0, width, height);
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = (img.height * pdfWidth) / img.width;
+
+      doc.addPage(); // Add a new page for each image
+      doc.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
     }
 
-    // save the PDF
-    doc.save("imagesToPdf.pdf");
+    // generate a unique timestamp-based filename
+    const timestamp = Date.now();
+    const filename = `images_${timestamp}_to_PDF.pdf`;
+
+    // save the PDF file with the unique filename
+    doc.save(filename);
   };
+
+  ////////////////////////////////////////////////
+  // const handleConvert = async () => {
+  //   // create a new jsPDF instance and set the page size to A4 portrait
+  //   const doc = new jsPDF("p", "mm", "a4");
+
+  //   for (let i = 0; i < storyImages.length; i++) {
+  //     const image = storyImages[i];
+  //     const img = new Image();
+
+  //     await new Promise((resolve, reject) => {
+  //       img.onload = resolve;
+  //       img.onerror = reject;
+  //       img.src = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
+  //     });
+
+  //     // add the image to the document and set the position to the center of the page
+  //     const defaultWidth = 210;
+  //     const defaultHeight = 297;
+  //     const imgWidth = img.width;
+  //     const imgHeight = img.height;
+  //     const ratio = imgWidth / imgHeight;
+  //     const width = defaultWidth;
+  //     const height = width / ratio;
+
+  //     //doc.addPage();
+  //     doc.addImage(img, "JPEG", 0, 0, width, height);
+  //   }
+
+  //   // save the PDF
+  //   doc.save("imagesToPdf.pdf");
+  // };
+  //////////////////////////////////////////////////////
 
   return (
     <>

@@ -11,6 +11,8 @@ import { BsBookmarkPlus, BsThreeDots, BsBookmarkFill } from "react-icons/bs";
 import CommentSidebar from "../CommentScreens/CommentSidebar";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import Moment from "react-moment";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 // import moment from "moment"
 
 const DetailStory = (props) => {
@@ -23,10 +25,12 @@ const DetailStory = (props) => {
   const [sidebarShowStatus, setSidebarShowStatus] = useState(false);
   const [loading, setLoading] = useState(true);
   const { storyId } = useParams();
-  console.log(storyId, "This is the storyId from DetailStory.js");
+  //console.log(storyId, "This is the storyId from DetailStory.js");
   const [storyReadListStatus, setStoryReadListStatus] = useState(false);
   const navigate = useNavigate();
   const [storyImages, setStoryImages] = useState();
+
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     const getDetailStory = async () => {
@@ -112,16 +116,37 @@ const DetailStory = (props) => {
     }
   };
 
-  const handleDelete = async () => {
-    if (window.confirm("Do you want to delete this post")) {
+  // const handleDelete = async () => {
+  //   if (window.confirm("Do you want to delete this post")) {
+  //     try {
+  //       await axios.delete(`/story/${storyId}/delete`, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           authorization: `Bearer ${localStorage.getItem("authToken")}`,
+  //         },
+  //       });
+  //       navigate("/");
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
+
+  const handleDelete = async (storyId) => {
+    if (window.confirm("Do you want to delete this post?")) {
       try {
+        const authToken = localStorage.getItem("authToken");
+
         await axios.delete(`/story/${storyId}/delete`, {
           headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            Authorization: `Bearer ${authToken}`,
           },
         });
-        navigate("/");
+
+        // Optionally, perform any additional actions after successful deletion
+        console.log("Post deleted successfully");
+        navigate("/"); // Assuming you have the `navigate` function available for client-side routing
       } catch (error) {
         console.log(error);
       }
@@ -184,6 +209,67 @@ const DetailStory = (props) => {
       console.error("Invalid filename format");
     }
   };
+  // const handleConvert = () => {
+  //   // create a new jsPDF instance and set the page size to A4 portrait
+  //   const doc = new jsPDF("p", "mm", "a4");
+
+  //   // add the image to the document and set the position to the center of the page
+  //   const defaultWidth = 210;
+  //   const defaultHeight = 297;
+
+  //   image.getElementById((img, index) => {
+  //     // get the width and height of the image
+  //     const imgWidth = doc.getImageProperties(img).width;
+  //     const imgHeight = doc.getImageProperties(img).height;
+  //     // cal ratio to scale the image
+  //     const ratio = imgWidth / imgHeight;
+  //     const width = defaultWidth;
+  //     const height = width / ratio;
+  //     // add the image to the document
+  //     doc.addImage(img, "JPEG", 0, 0, width, height);
+  //     // when the image is not the last one, add a new page
+  //     if (index < image.length - 1) doc.addPage();
+  //   });
+  //   // dataUrl is the base64 encoded string of the pdf
+  //   const pdf = doc.output("dataurlstring");
+  //   // set the download state to the dataUrl
+  //   setDownload(pdf);
+  //   // set the view state to the bloburl
+  //   setView(doc.output("bloburl"));
+  //   // set the isComplete state to true
+  //   setIsComplete(true);
+  // };
+  const handleConvert = async () => {
+    // create a new jsPDF instance and set the page size to A4 portrait
+    const doc = new jsPDF("p", "mm", "a4");
+
+    for (let i = 0; i < storyImages.length; i++) {
+      const image = storyImages[i];
+      const img = new Image();
+
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
+      });
+
+      // add the image to the document and set the position to the center of the page
+      const defaultWidth = 210;
+      const defaultHeight = 297;
+      const imgWidth = img.width;
+      const imgHeight = img.height;
+      const ratio = imgWidth / imgHeight;
+      const width = defaultWidth;
+      const height = width / ratio;
+
+      doc.addPage();
+      doc.addImage(img, "JPEG", 0, 0, width, height);
+    }
+
+    // save the PDF
+    doc.save("imagesToPdf.pdf");
+  };
+
   return (
     <>
       {loading ? (
@@ -312,7 +398,12 @@ const DetailStory = (props) => {
                                     Created At: {convertTime(image.fileName)}
                                   </strong>
                                 </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
+                                <Button
+                                  variant="primary"
+                                  onClick={handleConvert}
+                                >
+                                  Convert to PDF
+                                </Button>
                               </Card.Body>
                             </Card>
                           </Col>

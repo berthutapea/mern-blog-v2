@@ -1,7 +1,7 @@
 {
     "name": "frontend",
     "version": "0.1.0",
-    "proxy": "http://localhost:5000/",
+    "proxy": "https://mern-blog-api-v2.vercel.app/",
     "private": true,
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^32.0.0",

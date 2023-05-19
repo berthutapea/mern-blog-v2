@@ -67,7 +67,7 @@ const EditStory = () => {
     // Loop through all the files
     for (let i = 0; i < files.length; i++) {
       images.push(URL.createObjectURL(files[i]));
-      console.log("Saurav Hathi");
+      //console.log("Saurav Hathi");
     }
     // Set the image state
     setImage(images);

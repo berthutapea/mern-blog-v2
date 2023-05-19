@@ -116,22 +116,6 @@ const DetailStory = (props) => {
     }
   };
 
-  // const handleDelete = async () => {
-  //   if (window.confirm("Do you want to delete this post")) {
-  //     try {
-  //       await axios.delete(`/story/${storyId}/delete`, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           authorization: `Bearer ${localStorage.getItem("authToken")}`,
-  //         },
-  //       });
-  //       navigate("/");
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
-
   const handleDelete = async (storyId) => {
     if (window.confirm("Do you want to delete this post?")) {
       try {
@@ -213,73 +197,6 @@ const DetailStory = (props) => {
     }
   };
 
-  // const handleConvert = async () => {
-  //   for (let i = 0; i < storyImages.length; i++) {
-  //     const image = storyImages[i];
-  //     const doc = new jsPDF("p", "mm", "a4");
-
-  //     const img = new Image();
-
-  //     await new Promise((resolve, reject) => {
-  //       img.onload = resolve;
-  //       img.onerror = reject;
-  //       img.src = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
-  //     });
-
-  //     const defaultWidth = 210;
-  //     const defaultHeight = 297;
-  //     const imgWidth = img.width;
-  //     const imgHeight = img.height;
-  //     const ratio = imgWidth / imgHeight;
-  //     const width = defaultWidth;
-  //     const height = width / ratio;
-
-  //     doc.addImage(img, "JPEG", 0, 0, width, height);
-
-  //     // generate a unique timestamp-based filename
-  //     const timestamp = Date.now();
-  //     const filename = `image_${timestamp}_to_PDF.pdf`;
-
-  //     // save each PDF file with a unique filename
-  //     doc.save(filename);
-  //   }
-  // };
-
-  // const handleConvert = async () => {
-  //   for (let i = 0; i < storyImages.length; i++) {
-  //     const image = storyImages[i];
-  //     const doc = new jsPDF("p", "mm", "a4");
-
-  //     const canvas = document.createElement("canvas");
-  //     const ctx = canvas.getContext("2d");
-
-  //     const img = new Image();
-
-  //     await new Promise((resolve, reject) => {
-  //       img.onload = resolve;
-  //       img.onerror = reject;
-  //       img.src = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
-  //     });
-
-  //     canvas.width = img.width;
-  //     canvas.height = img.height;
-  //     ctx.drawImage(img, 0, 0);
-
-  //     const imgData = canvas.toDataURL("image/jpeg", 1.0);
-
-  //     const pdfWidth = doc.internal.pageSize.getWidth();
-  //     const pdfHeight = (img.height * pdfWidth) / img.width;
-
-  //     doc.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
-
-  //     // generate a unique timestamp-based filename
-  //     const timestamp = Date.now();
-  //     const filename = `image_${timestamp}_to_PDF.pdf`;
-
-  //     // save each PDF file with a unique filename
-  //     doc.save(filename);
-  //   }
-  // };
   const handleConvert = async () => {
     const doc = new jsPDF(); // Create a single doc object for all images
 
@@ -322,39 +239,6 @@ const DetailStory = (props) => {
     // save the PDF file with the unique filename
     doc.save(filename);
   };
-
-  ////////////////////////////////////////////////
-  // const handleConvert = async () => {
-  //   // create a new jsPDF instance and set the page size to A4 portrait
-  //   const doc = new jsPDF("p", "mm", "a4");
-
-  //   for (let i = 0; i < storyImages.length; i++) {
-  //     const image = storyImages[i];
-  //     const img = new Image();
-
-  //     await new Promise((resolve, reject) => {
-  //       img.onload = resolve;
-  //       img.onerror = reject;
-  //       img.src = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
-  //     });
-
-  //     // add the image to the document and set the position to the center of the page
-  //     const defaultWidth = 210;
-  //     const defaultHeight = 297;
-  //     const imgWidth = img.width;
-  //     const imgHeight = img.height;
-  //     const ratio = imgWidth / imgHeight;
-  //     const width = defaultWidth;
-  //     const height = width / ratio;
-
-  //     //doc.addPage();
-  //     doc.addImage(img, "JPEG", 0, 0, width, height);
-  //   }
-
-  //   // save the PDF
-  //   doc.save("imagesToPdf.pdf");
-  // };
-  //////////////////////////////////////////////////////
 
   return (
     <>

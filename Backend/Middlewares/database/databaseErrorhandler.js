@@ -16,11 +16,12 @@ export const checkStoryExist = asyncErrorWrapper(async (req, res, next) => {
 
 export const checkUserAndStoryExist = asyncErrorWrapper(
   async (req, res, next) => {
-    const { slug } = req.params;
+    const { author } = req.body;
+    const { storyId } = req.params;
 
     const story = await Story.findOne({
-      slug: slug,
-      author: req.user,
+      author: author,
+      _id: storyId,
     });
 
     if (!story) {

@@ -40,11 +40,8 @@ router.get(
 
 router.post(
   //"/story/editStory/:storyId/edit",
-  "/story/editStory/:storyId/edit",
+  "/editStory/:storyId/edit",
   [
-    () => {
-      console.log("request for", storyId);
-    },
     getAccessToRoute,
     checkStoryExist,
     //checkUserAndStoryExist,
@@ -55,8 +52,8 @@ router.post(
 );
 
 router.delete(
-  "/story/:storyId/delete",
-  [getAccessToRoute, checkStoryExist, checkUserAndStoryExist],
+  "/:storyId/delete",
+  [getAccessToRoute, checkUserAndStoryExist],
   deleteStory
 );
 
@@ -65,6 +62,7 @@ router.get("/getAllStories", getAllStories);
 router.get("/story_avatar", getStoryAvatar);
 
 router.get("/images/:userId/:storyId/:image", (req, res) => {
+  // console.log(req.url);
   res.sendFile(
     join(
       __dirname,

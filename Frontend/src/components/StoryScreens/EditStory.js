@@ -19,6 +19,7 @@ const EditStory = () => {
   const [loading, setLoading] = useState(true);
   const [story, setStory] = useState({});
   const [image, setImage] = useState("");
+  const [avatar, setAvatar] = useState("");
   const [download, setDownload] = useState(null);
   const [view, setView] = useState(null);
   const [isComplete, setIsComplete] = useState(false);
@@ -30,23 +31,33 @@ const EditStory = () => {
   const [error, setError] = useState("");
   //const navigate = useNavigate();
 
-  useEffect(() => {
-    const getStoryInfo = async () => {
-      setLoading(true);
-      try {
-        const { data } = await axios.get(`/story/editStory/${storyId}`, config);
+  const getStoryInfo = async () => {
+    setLoading(true);
+    try {
+      const { data } = await axios.post(
+        `/story/${storyId}`,
+        { ...config, activeUser: activeUser },
+        activeUser
+      );
+      console.log(data);
+      setStory(data.data);
+      setTitle(data.data.title);
+      setContent(data.data.content);
+      setImage(data.data.image);
+      setPreviousImage(data.data.image);
+      setLoading(false);
+      setAvatar(
+        `/story/story_avatar?userId=${data.data.author._id}&storyId=${data.data._id}&image=${data.data.image}`
+      );
+    } catch (error) {
+      setError("Failed to retrieve story information");
+      setLoading(false);
+    }
+  };
 
-        setStory(data.data);
-        setTitle(data.data.title);
-        setContent(data.data.content);
-        setImage(data.data.image);
-        setPreviousImage(data.data.image);
-        setLoading(false);
-      } catch (error) {
-        setError("Failed to retrieve story information");
-        setLoading(false);
-      }
-    };
+  useEffect(() => {
+    console.log(activeUser);
+
     getStoryInfo();
   }, []);
 
@@ -99,22 +110,32 @@ const EditStory = () => {
     const formdata = new FormData();
     formdata.append("title", title);
     formdata.append("content", content);
-    // formdata.append("image", image);
-    // formdata.append("previousImage", previousImage);
-    formdata.append("content", content);
+    if (image) {
+      formdata.append("image", image);
+    }
+
+    formdata.append("previousImage", previousImage);
+    // formdata.append("content", content);
     formdata.append("userId", activeUser._id);
 
     try {
-      const { data } = await axios.post(`/story/${storyId}/edit`, formdata, {
-        headers: {
-          "Content-Type": "",
-          authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      });
+      const { data } = await axios.post(
+        `/story/editStory/${storyId}/edit`,
+        formdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
 
       setSuccess("Edit Story successfully ");
       setStory(data);
       console.log(data);
+      setAvatar(
+        `/story/story_avatar?userId=${activeUser._id}&storyId=${data.data._id}&image=${data.data.image}`
+      );
       setTimeout(() => {
         setSuccess("");
       }, 7000);
@@ -153,6 +174,7 @@ const EditStory = () => {
             <CKEditor
               editor={ClassicEditor}
               onChange={(e, editor) => {
+                console.log(editor.getData());
                 const data = editor.getData();
                 setContent(data);
               }}
@@ -160,19 +182,20 @@ const EditStory = () => {
               data={content}
             />
 
-            <div class="currentlyImage">
-              <div class="absolute">Currently Image2</div>
-              <img
+            <div className="currentlyImage">
+              <div className="absolute">Currently Image2</div>
+              {/* <img
                 src={`/story/${storyId}/editStory/`}
                 alt="storyImage" //{story.title}
                 // src={`/story/editStory/${storyId}`}
                 // alt={story.title}
                 //alt="storyImage"
-              />
+              /> */}
+              <img src={avatar} />
             </div>
-            <div class="StoryImageField">
+            <div className="StoryImageField">
               <AiOutlineUpload />
-              <div class="txt">
+              <div className="txt">
                 {image === previousImage
                   ? "    Change the image in your story "
                   : image.name}
@@ -180,9 +203,10 @@ const EditStory = () => {
               <input
                 name="image"
                 type="file"
-                ref={imageEl}
+                // ref={imageEl}
                 onChange={(e) => {
                   setImage(e.target.files[0]);
+                  console.log(image);
                 }}
               />
             </div>

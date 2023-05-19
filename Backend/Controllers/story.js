@@ -94,7 +94,7 @@ export const addStory = asyncErrorWrapper(async (req, res, next) => {
         `../data/users/${req.body.userId}/stories/${newStory._id}/avatar/avatar.${imageExtention}`
       ),
       async (err) => {
-        console.log(err);
+        //console.log(err);
         if (err) {
           return res.status(401).json({
             success: false,
@@ -116,7 +116,7 @@ export const addStory = asyncErrorWrapper(async (req, res, next) => {
       }
     );
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     deleteImageFile(req);
 
     return next(error);
@@ -199,6 +199,7 @@ export const editStoryPage = asyncErrorWrapper(async (req, res, next) => {
 });
 
 export const editStory = asyncErrorWrapper(async (req, res, next) => {
+  //console.log("BODY", req.body);
   const { storyId } = req.params;
   const { title, content, image, previousImage } = req.body;
 
@@ -206,23 +207,47 @@ export const editStory = asyncErrorWrapper(async (req, res, next) => {
 
   story.title = title;
   story.content = content;
-  story.image = req.savedStoryImage;
+  //story.image = req.files.image.name;
 
-  if (!req.savedStoryImage) {
+  if (!req.files) {
     // if the image is not sent
-    story.image = image;
+    await story.save();
+    return res.status(200).json({
+      success: true,
+      data: story,
+    });
   } else {
     // if the image sent
     // old image locatıon delete
-    deleteImageFile(req, previousImage);
+    deleteImageFile(
+      `${story.author}/stories/${story._id}/avatar/${previousImage}`
+    )
+      .then(async () => {
+        story.image = req.files.image.name;
+        req.files.image.mv(
+          join(
+            __dirname,
+            `../data/users/${story.author}/stories/${story._id}/avatar/${req.files.image.name}`
+          ),
+          async (error) => {
+            if (error) {
+              //console.log(error);
+              return res.status(500).json({ success: false, error: error });
+            } else {
+              await story.save();
+              return res.status(200).json({
+                success: true,
+                data: story,
+              });
+            }
+          }
+        );
+      })
+      .catch((error) => {
+        //console.log(error);
+        return res.status(500).json({ success: false, error: error });
+      });
   }
-
-  await story.save();
-
-  return res.status(200).json({
-    success: true,
-    data: story,
-  });
 });
 
 export const deleteStory = asyncErrorWrapper(async (req, res, next) => {
@@ -230,14 +255,25 @@ export const deleteStory = asyncErrorWrapper(async (req, res, next) => {
 
   const story = await Story.findById(storyId);
 
-  deleteImageFile(req, story.image);
-
-  await story.remove();
-
-  return res.status(200).json({
-    success: true,
-    message: "Story delete succesfully ",
-  });
+  deleteImageFile(`${story.author}/stories/${story._id}`, {
+    recursive: true,
+    force: true,
+  })
+    .then(async () => {
+      await story.remove();
+      return res.status(200).json({
+        success: false,
+        message: "delete Story  successfully ",
+      });
+    })
+    .catch((error) => {
+      // console.log(error);
+      return res.status(500).json({
+        success: false,
+        message: "delete Story failed successfully ",
+        error: error,
+      });
+    });
 });
 
 export const getStoryAvatar = asyncErrorWrapper(async (req, res, next) => {
@@ -256,16 +292,16 @@ export const getStoryAvatar = asyncErrorWrapper(async (req, res, next) => {
 
 export const getStoryImages = asyncErrorWrapper(async (req, res, next) => {
   const { storyId, userId } = req.body;
-  console.log(req.body);
+  //console.log(req.body);
   try {
     const images = await Image.find({ storyId: storyId }).populate("userId");
-    console.log(images);
+    //console.log(images);
     if (userId) return res.status(200).json({ success: true, images: images });
     else {
       return res.status(404).json({ success: false });
     }
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return res.status(401).json({ success: false, error: error });
   }
 });

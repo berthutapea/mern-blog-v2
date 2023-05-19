@@ -142,6 +142,9 @@ const DetailStory = (props) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${authToken}`,
           },
+          data: JSON.stringify({
+            author: activeUser._id,
+          }),
         });
 
         // Optionally, perform any additional actions after successful deletion
@@ -412,7 +415,10 @@ const DetailStory = (props) => {
                     >
                       <FiEdit />
                     </Link>
-                    <span className="deleteStoryLink" onClick={handleDelete}>
+                    <span
+                      className="deleteStoryLink"
+                      onClick={(e) => handleDelete(story._id)}
+                    >
                       <RiDeleteBin6Line />
                     </span>
                   </div>

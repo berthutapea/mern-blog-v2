@@ -10,6 +10,7 @@ node_modules/
 
 # production
 Frontend/build
+Frontend/package-lock.json
 
 # misc
 .DS_Store

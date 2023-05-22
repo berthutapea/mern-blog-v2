@@ -55,7 +55,8 @@ const DetailStory = (props) => {
         const { data } = await axios.post(`/story/${storyId}`, {
           activeUser,
         });
-        document.title = data.data.name;
+        console.log(data.data);
+        document.title = `Mern Blog Scanner | ${data.data.title}`;
         setStory(data.data);
         setLikeStatus(data.likeStatus);
         setLikeCount(data.data.likeCount);

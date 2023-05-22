@@ -26,14 +26,9 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(join(__dirname, "public")));
-// app.use(cors());
+app.use(cors());
 
 app.use("/", IndexRoute);
-
-app.get("*", (req, res) => {
-  res.sendFile(join(__dirname, `public/index.html`));
-});
 // app.use("/camera", cameraRouter);
 // app.use("/auth", authRoute);
 // app.use("/story", storyRoute);

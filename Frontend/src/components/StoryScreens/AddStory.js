@@ -21,6 +21,7 @@ const AddStory = () => {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [story, setStory] = useState();
+  const isMounted = useRef(true);
 
   const clearInputs = () => {
     setTitle("");
@@ -45,13 +46,16 @@ const AddStory = () => {
           authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       });
-      setSuccess("Add story successfully ");
-      setStory(data);
-      console.log(data);
-      clearInputs();
-      setTimeout(() => {
-        setSuccess("");
-      }, 7000);
+
+      if (isMounted.current) {
+        setSuccess("Add story successfully ");
+        setStory(data);
+        console.log(data);
+        clearInputs();
+        setTimeout(() => {
+          setSuccess("");
+        }, 7000);
+      }
     } catch (error) {
       setTimeout(() => {
         setError("");

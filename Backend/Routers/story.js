@@ -1,26 +1,75 @@
-const express = require("express")
-const imageupload = require("../Helpers/Libraries/imageUpload");
+import express from "express";
+import fileUpload from "express-fileupload";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
-const { getAccessToRoute } = require("../Middlewares/Authorization/auth");
-const {addStory,getAllStories,detailStory,likeStory, editStory, deleteStory, editStoryPage } = require("../Controllers/story")
-const { checkStoryExist, checkUserAndStoryExist } = require("../Middlewares/database/databaseErrorhandler");
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const router = express.Router() ;
+import { getAccessToRoute } from "../Middlewares/Authorization/auth.js";
+import {
+  addStory,
+  getAllStories,
+  detailStory,
+  likeStory,
+  editStory,
+  deleteStory,
+  editStoryPage,
+  getStoryAvatar,
+  getStoryImages,
+} from "../Controllers/story.js";
+import {
+  checkStoryExist,
+  checkUserAndStoryExist,
+} from "../Middlewares/database/databaseErrorhandler.js";
 
-router.post("/addstory" ,[getAccessToRoute, imageupload.single("image")],addStory)
+const router = express.Router();
 
+router.post("/addstory", [getAccessToRoute, fileUpload()], addStory);
 
-router.post("/:slug", checkStoryExist, detailStory)
+router.post("/images/get", getStoryImages);
 
-router.post("/:slug/like",[getAccessToRoute,checkStoryExist] ,likeStory)
+router.post("/:storyId", checkStoryExist, detailStory);
 
-router.get("/editStory/:slug",[getAccessToRoute,checkStoryExist,checkUserAndStoryExist] , editStoryPage)
+router.post("/:storyId/like", [getAccessToRoute, checkStoryExist], likeStory);
 
-router.put("/:slug/edit",[getAccessToRoute,checkStoryExist,checkUserAndStoryExist, imageupload.single("image")] ,editStory)
+router.get(
+  "/editStory/:storyId",
+  [getAccessToRoute, checkStoryExist, checkUserAndStoryExist],
+  editStoryPage
+);
 
-router.delete("/:slug/delete",[getAccessToRoute,checkStoryExist,checkUserAndStoryExist] ,deleteStory)
+router.post(
+  //"/story/editStory/:storyId/edit",
+  "/editStory/:storyId/edit",
+  [
+    getAccessToRoute,
+    checkStoryExist,
+    //checkUserAndStoryExist,
+    fileUpload(),
+    // imageupload.single("image"),
+  ],
+  editStory
+);
 
-router.get("/getAllStories",getAllStories)
+router.delete(
+  "/:storyId/delete",
+  [getAccessToRoute, checkUserAndStoryExist],
+  deleteStory
+);
 
+router.get("/getAllStories", getAllStories);
 
-module.exports = router
+router.get("/story_avatar", getStoryAvatar);
+
+router.get("/images/:userId/:storyId/:image", (req, res) => {
+  // console.log(req.url);
+  res.sendFile(
+    join(
+      __dirname,
+      `../data/users/${req.params.userId}/stories/${req.params.storyId}/images/${req.params.image}`
+    )
+  );
+});
+
+// module.exports = router
+export default router;

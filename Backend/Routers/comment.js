@@ -1,21 +1,29 @@
-const express = require("express")
+import express from "express";
 
-const { getAccessToRoute } = require("../Middlewares/Authorization/auth");
+import { getAccessToRoute } from "../Middlewares/Authorization/auth.js";
 
-const { addNewCommentToStory ,getAllCommentByStory,commentLike ,getCommentLikeStatus} = require("../Controllers/comment")
+import {
+  addNewCommentToStory,
+  getAllCommentByStory,
+  commentLike,
+  getCommentLikeStatus,
+} from "../Controllers/comment.js";
 
-const { checkStoryExist } = require("../Middlewares/database/databaseErrorhandler");
+import { checkStoryExist } from "../Middlewares/database/databaseErrorhandler.js";
 
-const router = express.Router() ;
+const router = express.Router();
 
+router.post(
+  "/:storyId/addComment",
+  [getAccessToRoute, checkStoryExist],
+  addNewCommentToStory
+);
 
-router.post("/:slug/addComment",[getAccessToRoute,checkStoryExist] ,addNewCommentToStory)
+router.get("/:storyId/getAllComment", getAllCommentByStory);
 
-router.get("/:slug/getAllComment",getAllCommentByStory)
+router.post("/:comment_id/like", commentLike);
 
-router.post("/:comment_id/like",commentLike)
+router.post("/:comment_id/getCommentLikeStatus", getCommentLikeStatus);
 
-router.post("/:comment_id/getCommentLikeStatus",getCommentLikeStatus)
-
-
-module.exports = router
+export default router;
+// module.exports = router

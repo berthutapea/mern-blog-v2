@@ -1,113 +1,105 @@
-const asyncErrorWrapper = require("express-async-handler")
-const Story = require("../Models/story");
-const Comment = require("../Models/comment");
+import asyncErrorWrapper from "express-async-handler";
+import Story from "../Models/story.js";
+import Comment from "../Models/comment.js";
 
-const addNewCommentToStory  =asyncErrorWrapper(async(req,res,next)=> {
+export const addNewCommentToStory = asyncErrorWrapper(
+  async (req, res, next) => {
+    const { storyId } = req.params;
 
-    const {slug} = req.params 
+    const { star, content } = req.body;
 
-    const {star , content } =req.body 
-
-    const story = await Story.findOne({slug :slug })
+    const story = await Story.findById(storyId);
 
     const comment = await Comment.create({
+      story: story._id,
+      content: content,
+      author: req.user.id,
+      star: star,
+    });
 
-        story :story._id ,
-        content :content ,
-        author : req.user.id ,
-        star:star 
-    })
+    story.comments.push(comment._id);
 
-    story.comments.push(comment._id)
-
-    story.commentCount = story.comments.length
+    story.commentCount = story.comments.length;
 
     await story.save();
 
     return res.status(200).json({
-        success :true  , 
-        data : comment 
+      success: true,
+      data: comment,
+    });
+  }
+);
+
+export const getAllCommentByStory = asyncErrorWrapper(
+  async (req, res, next) => {
+    const { storyId } = req.params;
+
+    // const story = await Story.findOne({ slug: slug });
+
+    const commmentList = await Comment.find({
+      story: storyId,
     })
+      .populate({
+        path: "author",
+        select: "username photo",
+      })
+      .sort("-createdAt");
 
-})
+    return res.status(200).json({
+      success: true,
+      count: commmentList.length,
+      data: commmentList,
+    });
+  }
+);
 
+export const commentLike = asyncErrorWrapper(async (req, res, next) => {
+  const { activeUser } = req.body;
+  const { comment_id } = req.params;
 
-const getAllCommentByStory = asyncErrorWrapper(async(req, res, next) => {
+  const comment = await Comment.findById(comment_id);
 
-    const { slug } = req.params
+  if (!comment.likes.includes(activeUser._id)) {
+    comment.likes.push(activeUser._id);
+    comment.likeCount = comment.likes.length;
 
-    const story = await Story.findOne({slug:slug})
+    await comment.save();
+  } else {
+    const index = comment.likes.indexOf(activeUser._id);
+    comment.likes.splice(index, 1);
+    comment.likeCount = comment.likes.length;
+    await comment.save();
+  }
 
-    const commmentList =await Comment.find({
-        story : story._id 
-    }).populate({
-        path :"author",
-        select:"username photo"
-    }).sort("-createdAt")
+  const likeStatus = comment.likes.includes(activeUser._id);
 
-    return res.status(200)
-        .json({
-            success: true,
-            count: story.commentCount,
-            data: commmentList
-        })
+  return res.status(200).json({
+    success: true,
+    data: comment,
+    likeStatus: likeStatus,
+  });
+});
 
-})
+export const getCommentLikeStatus = asyncErrorWrapper(
+  async (req, res, next) => {
+    const { activeUser } = req.body;
+    const { comment_id } = req.params;
 
-const commentLike = asyncErrorWrapper(async(req, res, next) => {
+    const comment = await Comment.findById(comment_id);
+    const likeStatus = comment.likes.includes(activeUser._id);
 
-    const { activeUser} =  req.body 
-    const { comment_id} =  req.params 
+    return res.status(200).json({
+      success: true,
+      likeStatus: likeStatus,
+    });
+  }
+);
 
+export const commentsControllers = {
+  addNewCommentToStory,
+  getAllCommentByStory,
+  commentLike,
+  getCommentLikeStatus,
+};
 
-    const comment = await Comment.findById(comment_id)
-
-    if (!comment.likes.includes(activeUser._id)) {
-
-        comment.likes.push(activeUser._id)
-        comment.likeCount = comment.likes.length ;
-
-        await comment.save()  ;
-
-    }
-    else {
-
-        const index = comment.likes.indexOf(activeUser._id)
-        comment.likes.splice(index, 1)
-        comment.likeCount = comment.likes.length
-        await comment.save()  ;
-    }
-
-    const likeStatus = comment.likes.includes(activeUser._id)
-    
-    return res.status(200)
-        .json({
-            success: true,
-            data : comment,
-            likeStatus:likeStatus
-        })
-
-})
-
-const getCommentLikeStatus = asyncErrorWrapper(async(req, res, next) => {
-
-    const { activeUser} =  req.body 
-    const { comment_id} =  req.params 
-
-    const comment = await Comment.findById(comment_id)
-    const likeStatus = comment.likes.includes(activeUser._id)
-
-    return res.status(200)
-    .json({
-        success: true,
-        likeStatus:likeStatus
-    })
-
-})
-
-module.exports ={
-    addNewCommentToStory,
-    getAllCommentByStory,
-    commentLike,
-    getCommentLikeStatus
-}
+export default commentsControllers;

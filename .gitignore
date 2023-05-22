@@ -9,8 +9,9 @@ node_modules/
 /coverage
 
 # production
-/build
-Config/
+Frontend/build
+Frontend/package-lock.json
+
 # misc
 .DS_Store
 .env.local

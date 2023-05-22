@@ -197,82 +197,82 @@ const DetailStory = (props) => {
     }
   };
 
-  // const handleConvert = async () => {
-  //   const doc = new jsPDF(); // Create a single doc object for all images
-
-  //   for (let i = 0; i < storyImages.length; i++) {
-  //     const image = storyImages[i];
-
-  //     const canvas = document.createElement("canvas");
-  //     const ctx = canvas.getContext("2d");
-
-  //     const img = new Image();
-
-  //     const imageUrl = `/story/images/${story.author._id}/${storyId}/${
-  //       image.fileName
-  //     }?t=${Date.now()}`;
-
-  //     await new Promise((resolve, reject) => {
-  //       img.onload = resolve;
-  //       img.onerror = reject;
-  //       img.src = imageUrl;
-  //     });
-
-  //     canvas.width = img.width;
-  //     canvas.height = img.height;
-  //     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing the image
-  //     ctx.drawImage(img, 0, 0);
-
-  //     const imgData = canvas.toDataURL("image/jpeg", 1.0);
-
-  //     const pdfWidth = doc.internal.pageSize.getWidth();
-  //     const pdfHeight = (img.height * pdfWidth) / img.width;
-
-  //     doc.addPage(); // Add a new page for each image
-  //     doc.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
-  //   }
-
-  //   // generate a unique timestamp-based filename
-  //   const timestamp = Date.now();
-  //   const filename = `images_${timestamp}_to_PDF.pdf`;
-
-  //   // save the PDF file with the unique filename
-  //   doc.save(filename);
-  // };
-
   const handleConvert = async () => {
-    const doc = new jsPDF();
+    const doc = new jsPDF(); // Create a single doc object for all images
 
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+    for (let i = 0; i < storyImages.length; i++) {
+      const image = storyImages[i];
 
-    const img = new Image();
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
 
-    const imageUrl = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
+      const img = new Image();
 
-    await new Promise((resolve, reject) => {
-      img.onload = resolve;
-      img.onerror = reject;
-      img.src = imageUrl;
-    });
+      const imageUrl = `/story/images/${story.author._id}/${storyId}/${
+        image.fileName
+      }?t=${Date.now()}`;
 
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0);
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = imageUrl;
+      });
 
-    const imgData = canvas.toDataURL("image/jpeg", 1.0);
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing the image
+      ctx.drawImage(img, 0, 0);
 
-    const pdfWidth = doc.internal.pageSize.getWidth();
-    const pdfHeight = (img.height * pdfWidth) / img.width;
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
 
-    doc.addPage();
-    doc.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = (img.height * pdfWidth) / img.width;
 
+      doc.addPage(); // Add a new page for each image
+      doc.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+    }
+
+    // generate a unique timestamp-based filename
     const timestamp = Date.now();
     const filename = `images_${timestamp}_to_PDF.pdf`;
+
+    // save the PDF file with the unique filename
     doc.save(filename);
   };
+
+  // const handleConvert = async () => {
+  //   const doc = new jsPDF();
+
+  //   const canvas = document.createElement("canvas");
+  //   const ctx = canvas.getContext("2d");
+
+  //   const img = new Image();
+
+  //   const imageUrl = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
+
+  //   await new Promise((resolve, reject) => {
+  //     img.onload = resolve;
+  //     img.onerror = reject;
+  //     img.src = imageUrl;
+  //   });
+
+  //   canvas.width = img.width;
+  //   canvas.height = img.height;
+  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //   ctx.drawImage(img, 0, 0);
+
+  //   const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+  //   const pdfWidth = doc.internal.pageSize.getWidth();
+  //   const pdfHeight = (img.height * pdfWidth) / img.width;
+
+  //   doc.addPage();
+  //   doc.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+
+  //   const timestamp = Date.now();
+  //   const filename = `images_${timestamp}_to_PDF.pdf`;
+  //   doc.save(filename);
+  // };
 
   return (
     <>

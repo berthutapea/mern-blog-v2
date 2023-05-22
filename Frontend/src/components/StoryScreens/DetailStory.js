@@ -240,7 +240,7 @@ const DetailStory = (props) => {
   //   doc.save(filename);
   // };
 
-  const handleConvert = async (image) => {
+  const handleConvert = async () => {
     const doc = new jsPDF();
 
     const canvas = document.createElement("canvas");

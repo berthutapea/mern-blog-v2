@@ -12,7 +12,7 @@ import CommentSidebar from "../CommentScreens/CommentSidebar";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import Moment from "react-moment";
 import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
+// import html2canvas from "html2canvas";
 // import moment from "moment"
 
 const DetailStory = (props) => {
@@ -21,7 +21,7 @@ const DetailStory = (props) => {
   const [activeUser, setActiveUser] = useState({});
   const [story, setStory] = useState({});
   //console.log(story, "This is the story from DetailStory");
-  const [storyLikeUser, setStoryLikeUser] = useState([]);
+  // const [storyLikeUser, setStoryLikeUser] = useState([]);
   const [sidebarShowStatus, setSidebarShowStatus] = useState(false);
   const [loading, setLoading] = useState(true);
   const { storyId } = useParams();
@@ -30,7 +30,7 @@ const DetailStory = (props) => {
   const navigate = useNavigate();
   const [storyImages, setStoryImages] = useState();
 
-  const [isComplete, setIsComplete] = useState(false);
+  // const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     const getDetailStory = async () => {
@@ -58,7 +58,7 @@ const DetailStory = (props) => {
         setStory(data.data);
         setLikeStatus(data.likeStatus);
         setLikeCount(data.data.likeCount);
-        setStoryLikeUser(data.data.likes);
+        //setStoryLikeUser(data.data.likes);
         setLoading(false);
 
         const story_id = data.data._id;
@@ -108,7 +108,7 @@ const DetailStory = (props) => {
       );
 
       setLikeCount(data.data.likeCount);
-      setStoryLikeUser(data.data.likes);
+      // setStoryLikeUser(data.data.likes);
     } catch (error) {
       setStory({});
       localStorage.removeItem("authToken");
@@ -182,7 +182,7 @@ const DetailStory = (props) => {
       const hour = match[4];
       const minute = match[5];
       const second = match[6];
-      const extension = match[7];
+      // const extension = match[7];
 
       return (
         <>
@@ -197,46 +197,80 @@ const DetailStory = (props) => {
     }
   };
 
-  const handleConvert = async () => {
-    const doc = new jsPDF(); // Create a single doc object for all images
+  // const handleConvert = async () => {
+  //   const doc = new jsPDF(); // Create a single doc object for all images
 
-    for (let i = 0; i < storyImages.length; i++) {
-      const image = storyImages[i];
+  //   for (let i = 0; i < storyImages.length; i++) {
+  //     const image = storyImages[i];
 
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
+  //     const canvas = document.createElement("canvas");
+  //     const ctx = canvas.getContext("2d");
 
-      const img = new Image();
+  //     const img = new Image();
 
-      const imageUrl = `/story/images/${story.author._id}/${storyId}/${
-        image.fileName
-      }?t=${Date.now()}`;
+  //     const imageUrl = `/story/images/${story.author._id}/${storyId}/${
+  //       image.fileName
+  //     }?t=${Date.now()}`;
 
-      await new Promise((resolve, reject) => {
-        img.onload = resolve;
-        img.onerror = reject;
-        img.src = imageUrl;
-      });
+  //     await new Promise((resolve, reject) => {
+  //       img.onload = resolve;
+  //       img.onerror = reject;
+  //       img.src = imageUrl;
+  //     });
 
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing the image
-      ctx.drawImage(img, 0, 0);
+  //     canvas.width = img.width;
+  //     canvas.height = img.height;
+  //     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing the image
+  //     ctx.drawImage(img, 0, 0);
 
-      const imgData = canvas.toDataURL("image/jpeg", 1.0);
+  //     const imgData = canvas.toDataURL("image/jpeg", 1.0);
 
-      const pdfWidth = doc.internal.pageSize.getWidth();
-      const pdfHeight = (img.height * pdfWidth) / img.width;
+  //     const pdfWidth = doc.internal.pageSize.getWidth();
+  //     const pdfHeight = (img.height * pdfWidth) / img.width;
 
-      doc.addPage(); // Add a new page for each image
-      doc.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
-    }
+  //     doc.addPage(); // Add a new page for each image
+  //     doc.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+  //   }
 
-    // generate a unique timestamp-based filename
+  //   // generate a unique timestamp-based filename
+  //   const timestamp = Date.now();
+  //   const filename = `images_${timestamp}_to_PDF.pdf`;
+
+  //   // save the PDF file with the unique filename
+  //   doc.save(filename);
+  // };
+
+  const handleConvert = async (image) => {
+    const doc = new jsPDF();
+
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+
+    const imageUrl = `/story/images/${story.author._id}/${storyId}/${image.fileName}`;
+
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = imageUrl;
+    });
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0);
+
+    const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+    const pdfWidth = doc.internal.pageSize.getWidth();
+    const pdfHeight = (img.height * pdfWidth) / img.width;
+
+    doc.addPage();
+    doc.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+
     const timestamp = Date.now();
     const filename = `images_${timestamp}_to_PDF.pdf`;
-
-    // save the PDF file with the unique filename
     doc.save(filename);
   };
 
@@ -371,12 +405,14 @@ const DetailStory = (props) => {
                                     Created At: {convertTime(image.fileName)}
                                   </strong>
                                 </Card.Text>
-                                <Button
-                                  variant="primary"
-                                  onClick={handleConvert}
-                                >
-                                  Convert to PDF
-                                </Button>
+                                {activeUser._id === story.author._id && (
+                                  <Button
+                                    variant="primary"
+                                    onClick={handleConvert}
+                                  >
+                                    Convert to PDF
+                                  </Button>
+                                )}
                               </Card.Body>
                             </Card>
                           </Col>

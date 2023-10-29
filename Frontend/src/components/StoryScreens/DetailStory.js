@@ -9,6 +9,7 @@ import { FiEdit, FiArrowLeft } from 'react-icons/fi'
 import { FaRegComment } from 'react-icons/fa'
 import { BsBookmarkPlus, BsThreeDots, BsBookmarkFill } from 'react-icons/bs'
 import CommentSidebar from '../CommentScreens/CommentSidebar';
+import DOMPurify from 'dompurify';
 
 const DetailStory = () => {
   const [likeStatus, setLikeStatus] = useState(false)
@@ -238,7 +239,7 @@ const DetailStory = () => {
 
                 </div>
 
-                <div className='content' dangerouslySetInnerHTML={{ __html: (story.content) }}>
+                <div className='content' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(story.content) }}>
                 </div>
 
               </div>

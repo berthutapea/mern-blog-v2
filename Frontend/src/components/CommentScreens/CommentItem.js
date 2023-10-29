@@ -7,6 +7,7 @@ import {
 import { BsThreeDots } from 'react-icons/bs'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 
 const CommentItem = ({ comment, activeUser }) => {
     const navigate = useNavigate()
@@ -89,7 +90,7 @@ const CommentItem = ({ comment, activeUser }) => {
 
             <div className="comment-content">
 
-                <span dangerouslySetInnerHTML={{ __html: comment.content }}></span>
+                <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(comment.content) }}></span>
 
             </div>
 

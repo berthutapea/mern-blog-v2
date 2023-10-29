@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify'
 import React from 'react'
 import { AiFillStar } from 'react-icons/ai'
 import { BsThreeDots, BsBookmarkFill } from 'react-icons/bs'
@@ -9,6 +10,7 @@ const ReadListStoryItem = ({ story, editDate }) => {
         return trimmedString
     }
 
+    const storyContent = DOMPurify.sanitize(truncateContent(story.content) + "...")
     return (
 
         <div className="readList-story-item">
@@ -38,7 +40,7 @@ const ReadListStoryItem = ({ story, editDate }) => {
                     </div>
                     <div className="readList-story-content">
 
-                        <span dangerouslySetInnerHTML={{ __html: truncateContent(story.content) + "..." }}></span>
+                        <span dangerouslySetInnerHTML={{ __html: storyContent }}></span>
 
                     </div>
 

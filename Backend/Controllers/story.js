@@ -2,12 +2,14 @@ const asyncErrorWrapper = require("express-async-handler")
 const Story = require("../Models/story");
 const deleteImageFile = require("../Helpers/Libraries/deleteImageFile");
 const {searchHelper, paginateHelper} =require("../Helpers/query/queryHelpers")
+const sanitizeHtml = require('sanitize-html');
 
 const addStory = asyncErrorWrapper(async  (req,res,next)=> {
 
     const {title,content} = req.body 
 
-    var wordCount = content.trim().split(/\s+/).length ; 
+    const sanitizedContent = sanitizeHtml(content)
+    var wordCount = sanitizedContent.trim().split(/\s+/).length ; 
    
     let readtime = Math.floor(wordCount /200)   ;
 
@@ -15,7 +17,7 @@ const addStory = asyncErrorWrapper(async  (req,res,next)=> {
     try {
         const newStory = await Story.create({
             title,
-            content,
+            content: sanitizedContent,
             author :req.user._id ,
             image : req.savedStoryImage,
             readtime

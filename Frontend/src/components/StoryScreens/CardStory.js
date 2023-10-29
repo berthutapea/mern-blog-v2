@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 
 const Story = ({ story }) => {
 
@@ -21,6 +22,7 @@ const Story = ({ story }) => {
         return trimmedString
     }
     
+    const storyText = DOMPurify.sanitize(truncateContent( story.content) +"...")
     return (
 
         <div className="story-card">
@@ -37,7 +39,7 @@ const Story = ({ story }) => {
                     </h5>
 
 
-                    <p className="story-text"dangerouslySetInnerHTML={{__html : truncateContent( story.content) +"..."}}>
+                    <p className="story-text"dangerouslySetInnerHTML={{__html :DOMPurify.sanitize(storyText)}}>
                         </p>
                     <p className="story-createdAt">{editDate(story.createdAt)} 
                     </p>
